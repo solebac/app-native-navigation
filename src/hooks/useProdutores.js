@@ -16,6 +16,7 @@ export default function useProdutores(melhoresProdutores) {
       novaLista = novaLista.filter(produtor => produtor.estrelas > 3);
     }
     setLista(novaLista);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return lista;
