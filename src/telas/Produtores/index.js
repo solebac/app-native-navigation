@@ -12,19 +12,25 @@ export default function Produtores({melhoresProdutores}) {
   const route = useRoute();
   const [compras, setCompras] = useState('');
   const lista = useProdutores(melhoresProdutores);
-  const {tituloProdutores} = useTextos();
+  const {tituloProdutores, mensagemCompra} = useTextos();
   //console.log(route.params);
   React.useEffect(() => {
     if (route.params) {
       console.log(route.params.compra);
-      setCompras(route.params.compra);
+      const msgFull = mensagemCompra?.replace(
+        '$NOME',
+        route.params.compra.nome,
+      );
+      console.log(msgFull);
+      setCompras(msgFull);
     }
-  }, [route.params]);
+  }, [route.params, mensagemCompra]);
+
   const TopoLista = () => {
     return (
       <>
         <Topo melhoresProdutores={melhoresProdutores} />
-        <Text>{compras.nome}</Text>
+        <Text style={estilos.compra}>{compras}</Text>
         <Text style={estilos.titulo}>{tituloProdutores}</Text>
       </>
     );
@@ -59,5 +65,12 @@ const estilos = StyleSheet.create({
     marginTop: 16,
     fontWeight: 'bold',
     color: '#464646',
+  },
+  compra: {
+    backgroundColor: '#EAF5F3',
+    color: 'red',
+    padding: 16,
+    fontSize: 16,
+    lineHeight: 26,
   },
 });
