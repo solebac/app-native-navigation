@@ -1,21 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, Text, StyleSheet} from 'react-native';
 
 import Produtor from './componentes/Produtor';
 import Topo from './componentes/Topo';
 import useProdutores from '../../hooks/useProdutores';
 import useTextos from '../../hooks/useTextos';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 export default function Produtores({melhoresProdutores}) {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [compras, setCompras] = useState('');
   const lista = useProdutores(melhoresProdutores);
   const {tituloProdutores} = useTextos();
-
+  //console.log(route.params);
+  React.useEffect(() => {
+    if (route.params) {
+      console.log(route.params.compra);
+      setCompras(route.params.compra);
+    }
+  }, [route.params]);
   const TopoLista = () => {
     return (
       <>
         <Topo melhoresProdutores={melhoresProdutores} />
+        <Text>{compras.nome}</Text>
         <Text style={estilos.titulo}>{tituloProdutores}</Text>
       </>
     );
