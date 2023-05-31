@@ -25,7 +25,7 @@ export default function Detalhes({nome, produtor, descricao, preco}) {
         style={estilos.botao}
         onPress={() =>
           navigation.navigate('HomeScreen', {
-            compra: {nome},
+            compra: {nome, timestamp: new Date().valueOf()},
           })
         }>
         <Texto style={estilos.textoBotao}>{botaoComprar}</Texto>

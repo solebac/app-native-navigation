@@ -11,18 +11,25 @@ export default function Produtores({melhoresProdutores}) {
   const navigation = useNavigation();
   const route = useRoute();
   const [compras, setCompras] = useState('');
+  const [timestamp, setTimestamp] = useState(0);
   const lista = useProdutores(melhoresProdutores);
   const {tituloProdutores, mensagemCompra} = useTextos();
   //console.log(route.params);
   React.useEffect(() => {
     if (route.params) {
-      console.log(route.params.compra);
+      console.log(route.params);
       const msgFull = mensagemCompra?.replace(
         '$NOME',
         route.params.compra.nome,
       );
-      console.log(msgFull);
       setCompras(msgFull);
+      setTimestamp(route.params.timestamp);
+      if (msgFull) {
+        let timout;
+        timout = setTimeout(() => {
+          setCompras(false);
+        }, 3000);
+      }
     }
   }, [route.params, mensagemCompra]);
 
@@ -30,7 +37,7 @@ export default function Produtores({melhoresProdutores}) {
     return (
       <>
         <Topo melhoresProdutores={melhoresProdutores} />
-        <Text style={estilos.compra}>{compras}</Text>
+        {!!compras && <Text style={estilos.compra}>{compras}</Text>}
         <Text style={estilos.titulo}>{tituloProdutores}</Text>
       </>
     );
